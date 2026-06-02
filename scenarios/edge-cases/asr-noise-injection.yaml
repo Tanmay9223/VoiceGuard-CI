@@ -1,0 +1,33 @@
+id: asr-noise-injection
+name: ASR Noise Recovery — Garbled Caller Input
+workflow: quote
+caller_persona: "Caller on a noisy street, speaking clearly but with background noise. Expects the agent to ask for clarification when confused."
+use_audio_pipeline: true  # TTS→STT round-trip via ElevenLabs + Deepgram
+tags: [quote, edge-case, asr, audio-pipeline]
+turns:
+  - speaker: caller
+    text: "Hi, I need a quote for my car. It's a 2021 Ford Mustang."
+  - speaker: agent
+    expect:
+      must_include: ["recording consent"]
+  - speaker: caller
+    text: "The ZIP code is eight four one zero one."  # spoken form — tests STT number parsing
+  - speaker: agent
+    expect:
+      tool_called: get_quote
+      tool_args: {vehicle: "2021 Ford Mustang", zip_code: "84101"}
+      must_include: ["premium disclaimer"]
+  - speaker: caller
+    text: "Great, thank you!"
+expected_outcomes:
+  - tool_called: get_quote
+    args: {vehicle: "2021 Ford Mustang", zip_code: "84101"}
+  - disclosed: recording consent
+  - disclosed: premium disclaimer
+
+# Notes for reviewers:
+# - This is the ONLY scenario with use_audio_pipeline: true
+# - ElevenLabs synthesizes each caller turn to audio bytes
+# - Deepgram transcribes audio bytes back to text before passing to VoiceAgent
+# - Tests that STT correctly handles spoken numbers ("eight four one zero one" → "84101")
+# - Tests that agent handles any ASR drift gracefully (asr_recovery_fail class)

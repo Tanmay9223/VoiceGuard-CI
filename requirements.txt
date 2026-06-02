@@ -1,0 +1,30 @@
+# LLM
+google-genai>=0.8.0
+
+# STT
+deepgram-sdk>=3.0.0
+
+# TTS
+elevenlabs>=1.0.0
+
+# Config & validation
+pydantic-settings>=2.0.0
+pydantic>=2.0.0
+
+# Database
+sqlalchemy>=2.0.0
+alembic>=1.13.0
+
+# YAML
+pyyaml>=6.0.0
+
+# Dashboard
+streamlit>=1.35.0
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+
+# Utilities
+python-dotenv>=1.0.0
+rich>=13.0.0

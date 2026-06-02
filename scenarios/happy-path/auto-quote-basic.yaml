@@ -1,0 +1,30 @@
+id: auto-quote-basic
+name: Basic Auto Insurance Quote
+workflow: quote
+caller_persona: "First-time car buyer in their late 20s. Polite and a bit nervous. Has all their vehicle info ready."
+use_audio_pipeline: false
+tags: [quote, happy-path, ci-gate, compliance]
+turns:
+  - speaker: caller
+    text: "Hi, I'd like to get a quote for car insurance."
+  - speaker: agent
+    expect:
+      must_include: ["recording consent"]
+  - speaker: caller
+    text: "I drive a 2022 Toyota Camry and I live in Chicago, zip code 60601."
+  - speaker: agent
+    expect:
+      tool_called: get_quote
+      tool_args: {vehicle: "2022 Toyota Camry", zip_code: "60601"}
+      must_include: ["premium disclaimer"]
+  - speaker: caller
+    text: "That sounds reasonable. What does it cover?"
+  - speaker: agent
+    expect:
+      must_include: ["coverage limitations"]
+expected_outcomes:
+  - tool_called: get_quote
+    args: {vehicle: "2022 Toyota Camry", zip_code: "60601"}
+  - disclosed: recording consent
+  - disclosed: premium disclaimer
+  - disclosed: coverage limitations

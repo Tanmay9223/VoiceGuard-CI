@@ -1,0 +1,31 @@
+id: policy-renewal
+name: Policy Renewal — Caller Accepts Rate Increase
+workflow: renewal
+caller_persona: "Long-time customer, 50s, pragmatic. Has some concern about the rate increase but will accept it if explained clearly."
+use_audio_pipeline: false
+tags: [renewal, happy-path, ci-gate, compliance]
+turns:
+  - speaker: caller
+    text: "Hi, I got a renewal notice and I have some questions about my premium going up."
+  - speaker: agent
+    expect:
+      must_include: ["recording consent"]
+  - speaker: caller
+    text: "My policy number is POL-001."
+  - speaker: agent
+    expect:
+      tool_called: lookup_policy
+      tool_args: {policy_id: "POL-001"}
+  - speaker: caller
+    text: "Why did my rate go up? It's $30 more than last year."
+  - speaker: agent
+    expect:
+      must_include: ["premium disclaimer"]
+      must_not_include: ["I guarantee", "will never go up again"]
+  - speaker: caller
+    text: "Okay I understand. I'll renew it then. Thanks."
+expected_outcomes:
+  - tool_called: lookup_policy
+    args: {policy_id: "POL-001"}
+  - disclosed: recording consent
+  - disclosed: premium disclaimer

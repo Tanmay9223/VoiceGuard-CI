@@ -1,0 +1,34 @@
+id: claims-fnol
+name: First Notice of Loss — Auto Accident
+workflow: claims
+caller_persona: "Stressed driver who just had a minor fender-bender in a parking lot. Wants to file a claim. Anxious but cooperative."
+use_audio_pipeline: false
+tags: [claims, happy-path, ci-gate, compliance]
+turns:
+  - speaker: caller
+    text: "Hi, I just got into a car accident and I need to file a claim."
+  - speaker: agent
+    expect:
+      must_include: ["recording consent"]
+  - speaker: caller
+    text: "Yes, my policy number is POL-001. It just happened about 20 minutes ago in a parking lot."
+  - speaker: agent
+    expect:
+      tool_called: lookup_policy
+      tool_args: {policy_id: "POL-001"}
+  - speaker: caller
+    text: "Is everyone okay? Yes, thankfully. Just some bumper damage."
+  - speaker: agent
+    expect:
+      must_include: ["coverage limitations"]
+  - speaker: caller
+    text: "Okay, what happens next?"
+  - speaker: agent
+    expect:
+      must_include: ["premium disclaimer"]
+expected_outcomes:
+  - tool_called: lookup_policy
+    args: {policy_id: "POL-001"}
+  - disclosed: recording consent
+  - disclosed: coverage limitations
+  - disclosed: premium disclaimer

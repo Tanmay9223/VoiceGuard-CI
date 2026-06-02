@@ -1,0 +1,29 @@
+id: ambiguous-zip
+name: Caller Provides Wrong ZIP — Corrects Later
+workflow: quote
+caller_persona: "Forgetful caller, mid-40s. Gives the wrong ZIP code initially but corrects it when the agent reads it back. Friendly."
+use_audio_pipeline: false
+tags: [quote, edge-case, data-correction]
+turns:
+  - speaker: caller
+    text: "Hi I need a quote for my car — 2019 Honda CR-V."
+  - speaker: agent
+    expect:
+      must_include: ["recording consent"]
+  - speaker: caller
+    text: "ZIP code? Oh it's 9021. Wait, sorry, 90210."
+  - speaker: agent
+    expect:
+      must_not_include: ["9021"]
+  - speaker: caller
+    text: "Yes, 90210 is correct. Beverly Hills, yeah."
+  - speaker: agent
+    expect:
+      tool_called: get_quote
+      tool_args: {vehicle: "2019 Honda CR-V", zip_code: "90210"}
+      must_include: ["premium disclaimer"]
+expected_outcomes:
+  - tool_called: get_quote
+    args: {vehicle: "2019 Honda CR-V", zip_code: "90210"}
+  - disclosed: recording consent
+  - disclosed: premium disclaimer

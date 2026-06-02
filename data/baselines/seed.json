@@ -1,0 +1,14 @@
+{
+  "run_id": "seed",
+  "commit_sha": "seed-baseline",
+  "timestamp": "2026-01-01T00:00:00",
+  "note": "Hand-crafted seed baseline. Used as fallback until first real merge to main.",
+  "compliance_score": 1.0,
+  "hallucination_score": 1.0,
+  "quality_score": 4.0,
+  "tool_accuracy": 0.95,
+  "failure_tags": [],
+  "total_scenarios": 9,
+  "passed_count": 9,
+  "failed_count": 0
+}

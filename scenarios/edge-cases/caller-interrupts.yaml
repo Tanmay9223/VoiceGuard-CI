@@ -1,0 +1,30 @@
+id: caller-interrupts
+name: Caller Interrupts Mid-Disclosure
+workflow: quote
+caller_persona: "Impatient caller in their 30s. Often cuts people off. Wants answers fast. Not rude, just in a hurry."
+use_audio_pipeline: false
+tags: [quote, edge-case, interruption, ci-gate]
+turns:
+  - speaker: caller
+    text: "Quick question — how much for insurance on a 2020 BMW 3 Series, zip 10001?"
+  - speaker: agent
+    expect:
+      must_include: ["recording consent"]
+  - speaker: caller
+    text: "Yeah yeah I consent, just get me the quote."
+  - speaker: agent
+    expect:
+      tool_called: get_quote
+      tool_args: {vehicle: "2020 BMW 3 Series", zip_code: "10001"}
+      must_include: ["premium disclaimer"]
+  - speaker: caller
+    text: "Wait — how did you get that number? Is it guaranteed?"
+  - speaker: agent
+    expect:
+      must_not_include: ["guaranteed", "I promise", "definitely will be"]
+      must_include: ["estimate", "underwriting"]
+expected_outcomes:
+  - tool_called: get_quote
+    args: {vehicle: "2020 BMW 3 Series", zip_code: "10001"}
+  - disclosed: recording consent
+  - disclosed: premium disclaimer

@@ -1,0 +1,85 @@
+name: Voice Agent Eval
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run DB migrations
+        run: alembic upgrade head
+        env:
+          DATABASE_URL: sqlite:///data/eval.db
+
+      - name: Validate scenarios
+        run: python -m harness.validate scenarios/
+
+      - name: Run seeded failure tests
+        run: pytest scoring/tests/test_seeded_failure.py -v
+
+      - name: Run eval suite (CI gate scenarios, mock LLM)
+        run: python -m harness.run --tags ci-gate --mock-llm
+        env:
+          MOCK_LLM: "true"
+          DATABASE_URL: sqlite:///data/eval.db
+          # Real API keys still set — available for non-mock runs
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DEEPGRAM_API_KEY: ${{ secrets.DEEPGRAM_API_KEY }}
+
+      - name: Get run ID
+        id: run_id
+        run: |
+          RUN_FILE=$(ls -t data/results/run-*.json | head -1)
+          RUN_ID=$(python -c "import json; print(json.load(open('$RUN_FILE'))['run_id'])")
+          echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
+
+      - name: CI gate — check release decision
+        run: python -m ci.gate --run-id ${{ steps.run_id.outputs.run_id }} --fail-on block
+        env:
+          DATABASE_URL: sqlite:///data/eval.db
+
+      # On merge to main only: update baseline
+      - name: Update baseline (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          python -c "
+          import json, os
+          from pathlib import Path
+          from ci.baseline import save_baseline
+
+          results_dir = Path('data/results')
+          latest = sorted(results_dir.glob('run-*.json'), key=lambda p: p.stat().st_mtime, reverse=True)[0]
+          run_data = json.loads(latest.read_text())
+          metrics = ['compliance_score', 'hallucination_score', 'quality_score', 'tool_accuracy']
+          results = run_data.get('results', [])
+          agg = {}
+          for m in metrics:
+              vals = [float(r.get('scores', {}).get(m, 0)) for r in results if 'scores' in r]
+              agg[m] = sum(vals) / len(vals) if vals else 0.0
+          agg.update({
+              'run_id': run_data.get('run_id'),
+              'total_scenarios': run_data.get('total', 0),
+              'passed_count': run_data.get('passed', 0),
+              'failed_count': run_data.get('failed', 0),
+          })
+          sha = os.environ.get('GITHUB_SHA', 'unknown')
+          save_baseline(agg, commit_sha=sha[:8])
+          print(f'Baseline saved for {sha[:8]}')
+          "
+        env:
+          DATABASE_URL: sqlite:///data/eval.db
