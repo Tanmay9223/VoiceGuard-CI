@@ -13,6 +13,7 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
+import os
 import json
 from datetime import datetime
 
@@ -127,6 +128,10 @@ def _score_color(val: float, threshold: float) -> str:
 
 st.markdown("# 🛡️ VoiceGuard CI")
 st.markdown("*Real-time insurance voice agent — CI/CD dashboard*")
+
+if os.environ.get("MOCK_LLM", "false").lower() == "true":
+    st.warning("⚠️ **MOCK_LLM is enabled.** The application is running using local mock data and is not making online LLM API calls.")
+
 st.divider()
 
 # ---------------------------------------------------------------------------
@@ -139,10 +144,18 @@ if not runs:
     st.warning("No run results found in `data/results/`. Run `python -m harness.run --all` first.")
     st.stop()
 
-run_labels = [f"Run {r.get('run_id', '?')} — {r.get('timestamp', '')[:16]}" for r in runs]
-selected_idx = st.sidebar.selectbox("Select Run", range(len(runs)), format_func=lambda i: run_labels[i])
+run_labels = [f"Run {r.get('run_id', '?')} — {r.get('timestamp', '')[:16].replace('T', ' ')}" for r in runs]
+
+st.markdown("### 🗂️ View Past Runs")
+selected_idx = st.selectbox(
+    "Select a CI Run to view its results:", 
+    range(len(runs)), 
+    format_func=lambda i: run_labels[i]
+)
 run = runs[selected_idx]
 baseline = load_baseline()
+
+st.divider()
 
 # ---------------------------------------------------------------------------
 # Panel 1 — Latest Run Summary
@@ -157,12 +170,15 @@ passed = run.get("passed", 0)
 failed = run.get("failed", 0)
 decision = run.get("release_decision", "ship")
 
+used_mock = run.get("mock_llm", False)
+llm_status = "Mock LLM" if used_mock else "Online LLM"
+
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown(f"""<div class="metric-card">
         <div class="metric-label">Run ID</div>
         <div class="metric-value" style="font-size:22px;">{run_id}</div>
-        <div class="metric-label" style="margin-top:4px;">{timestamp}</div>
+        <div class="metric-label" style="margin-top:4px;">{timestamp} | {llm_status}</div>
     </div>""", unsafe_allow_html=True)
 with col2:
     st.markdown(f"""<div class="metric-card">
@@ -304,22 +320,37 @@ else:
 st.divider()
 
 # ---------------------------------------------------------------------------
-# Panel 4 — Production Mining Feed (Planned stub)
+# Panel 4 — Production Mining Feed
 # ---------------------------------------------------------------------------
 
 st.markdown("## 🔬 Panel 4 — Production Mining Feed")
-st.markdown("""
-<div class="stub-panel">
-    <div style="font-size: 48px; margin-bottom: 16px;">🔜</div>
-    <div style="font-size: 20px; font-weight: 600; color: #9999bb; margin-bottom: 8px;">Planned: Phase 05</div>
-    <div style="font-size: 14px; color: #666688; max-width: 480px; margin: 0 auto;">
-        The production mining pipeline will automatically ingest real call failures,
-        de-duplicate them, and surface them here as pending regression scenarios.
-        <br><br>
-        <strong>Hook:</strong> <code>python -m mining.ingest --input data/production-calls/</code>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("Newly generated regression scenarios from the `mining.ingest` pipeline, ready to be reviewed and merged into the main test suite.")
+
+pending_dir = Path("scenarios/regression/pending")
+if pending_dir.exists():
+    pending_files = list(pending_dir.glob("*.yaml"))
+else:
+    pending_files = []
+
+if not pending_files:
+    st.info("No pending regression scenarios found. Run the ingestion pipeline to automatically detect failures and author tests here.")
+else:
+    import yaml
+    rows = []
+    for f in pending_files:
+        try:
+            data = yaml.safe_load(f.read_text())
+            rows.append({
+                "Scenario ID": data.get("id", f.stem),
+                "Failure Class": data.get("failure_class", "Unknown"),
+                "Workflow": data.get("workflow", "quote"),
+                "Action": "Review & Merge"
+            })
+        except Exception:
+            pass
+            
+    if rows:
+        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
 st.divider()
 
@@ -328,7 +359,7 @@ st.divider()
 # ---------------------------------------------------------------------------
 st.markdown(
     "<div style='text-align:center; color: #555577; font-size:12px; margin-top: 16px;'>"
-    "VoiceGuard CI · Built with Gemini · Phases 05 & 06 planned"
+    "VoiceGuard CI · Built By Tanmay"
     "</div>",
     unsafe_allow_html=True,
 )

@@ -1,0 +1,11 @@
+llms:
+  - id: gemini-3.1-flash-lite
+    provider: google
+    model: gemini-3.1-flash-lite
+    cost_per_1k_input: 0.000075
+    cost_per_1k_output: 0.0003
+  - id: gemini-2.0-flash
+    provider: google
+    model: gemini-2.0-flash
+    cost_per_1k_input: 0.0001
+    cost_per_1k_output: 0.0004

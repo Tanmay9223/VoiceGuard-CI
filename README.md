@@ -1,64 +1,53 @@
-# Voice Agent CI — Insurance Calls
+# 🛡️ VoiceGuard CI
 
-> CI/CD for real-time insurance voice agents. Every change is benchmarked, red-teamed, and scored before it ships.
+An automated CI/CD pipeline for real-time insurance voice agents. Every change is benchmarked, red-teamed, and scored against compliance and hallucination rules before it ships.
 
----
+## ✨ Technologies
 
-## One-liner
-*"A CI system that benchmarks every model change, red-teams failure modes, and converts production mistakes into new eval cases — automatically."*
+- `Python 3.11+`
+- `Gemini`
+- `Deepgram`
+- `ElevenLabs`
+- `Streamlit`
+- `GitHub Actions`
+- `SQLite / Postgres`
 
----
+## 🚀 Features
 
-## Project Phases
+- **Conversation Harness** - Simulates calls and runs complex insurance scenarios against voice agents.
+- **Scoring Engine** - Evaluates transcripts for 7 failure classes using a hybrid of rule-based logic and Gemini LLM judges.
+- **Regression Dashboard** - Interactive Streamlit UI to track performance deltas across different runs.
+- **CI Gate** - Automatically blocks pull requests on compliance violations or hallucinations.
+- **Cost-Free Local CI** - Includes a `--mock-llm` flag to run the entire pipeline locally without incurring API costs.
 
-| Phase | Name | Focus | Status |
-|-------|------|-------|--------|
-| [01](./phase-01-setup.md) | Setup & Infrastructure | Repo, env, core interfaces | ✅ Built |
-| [02](./phase-02-harness.md) | Conversation Harness | Scenario runner & call simulation | ✅ Built |
-| [03](./phase-03-scenarios.md) | Scenario Library | 9 insurance call scripts | ✅ Built |
-| [04](./phase-04-scoring.md) | Scoring Engine | Failure taxonomy + hybrid evaluation | ✅ Built |
-| [05](./phase-05-hardcases.md) | Hard-Case Mining | Production replay pipeline | 🔜 Planned |
-| [06](./phase-06-comparison.md) | Model/Provider Comparison | STT, TTS, LLM benchmarking | 🔜 Planned |
-| [07](./phase-07-ci-gate.md) | CI Gate & Dashboard | Release decisions + regression UI | ✅ Built |
+## 📍 The Process
 
----
+Building voice agents for insurance requires absolute confidence that they won't hallucinate coverage or violate compliance rules. Standard unit tests aren't enough for non-deterministic LLM behavior. VoiceGuard CI was built to solve this by benchmarking every model change, red-teaming failure modes, and converting production mistakes into new evaluation cases—automatically gating regressions before they hit production.
 
-## Stack
-- **Runtime**: Python 3.11+
-- **LLM**: Gemini (judge + agent)
-- **STT**: Deepgram (nova-2)
-- **TTS**: ElevenLabs
-- **DB**: SQLite (dev) → Postgres (prod)
-- **Dashboard**: Streamlit
-- **CI**: GitHub Actions
+## 🔄 How It Works
 
----
+```mermaid
+flowchart TD
+    A[Pull Request / CI Trigger] -->|Initiates Run| B(Conversation Harness)
+    B -->|Plays Scenarios| C[Voice Agent]
+    C -->|Generates Transcripts| B
+    B --> D{Scoring Engine}
+    
+    D --> E[Rule-Based Checks]
+    E -.->|Latency, Regex| G
+    
+    D --> F[Gemini LLM Judge]
+    F -.->|Compliance, Hallucination| G
+    
+    G[Aggregated Score] --> H{CI Gate}
+    H -->|Critical Failure| I[❌ Block PR]
+    H -->|Passes Threshold| J[✅ Allow Merge]
+    
+    H --> K[(SQLite / Postgres)]
+    K --> L[📊 Regression Dashboard]
+```
 
-## MVP Scope (4 Phases)
-
-> A tight MVP is more impressive than a sprawling incomplete system.
-
-**Built:**
-1. **Phase 01** — Setup (foundation, can't skip)
-2. **Phase 02** — Conversation Harness (the core engine)
-3. **Phase 04** — Scoring Engine (the differentiator)
-4. **Phase 07** — CI Gate + Dashboard (the "wow" moment)
-
-**Planned (Phase 05 & 06):** Provider comparison and hard-case mining are next milestones.
-
----
-
-## MVP Definition
-- [x] 9 call scenarios (happy-path, edge-cases, red-team)
-- [x] 7 failure classes with evaluators (4 rule-based + 3 LLM judges)
-- [x] Regression delta dashboard (Streamlit)
-- [x] CI gate blocks on compliance/hallucination failures
-- [x] `--mock-llm` flag for CI (no API costs)
-- [ ] Auto-ingestion of production failures *(Phase 05 — planned)*
-
----
-
-## Quick Start
+## 📦 Quick Start
 
 ```bash
 # 1. Install dependencies
