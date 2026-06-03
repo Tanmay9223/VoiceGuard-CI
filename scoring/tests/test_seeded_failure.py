@@ -7,6 +7,7 @@ Run with: pytest scoring/tests/test_seeded_failure.py -v
 """
 from __future__ import annotations
 
+# pyrefly: ignore [missing-import]
 import pytest
 
 from harness.models import (

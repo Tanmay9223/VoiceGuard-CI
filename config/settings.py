@@ -6,6 +6,7 @@ All values are loaded from environment variables (or .env file).
 from __future__ import annotations
 
 from functools import lru_cache
+# pyrefly: ignore [missing-import]
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -19,8 +20,8 @@ class Settings(BaseSettings):
 
     # --- LLM ---
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.0-flash"          # agent + judge model
-    gemini_judge_model: str = "gemini-2.0-flash"    # can override to use a different judge
+    gemini_model: str = "gemini-3.1-flash-lite"          # agent + judge model
+    gemini_judge_model: str = "gemini-3.1-flash-lite"    # can override to use a different judge
 
     # --- STT ---
     deepgram_api_key: str = ""

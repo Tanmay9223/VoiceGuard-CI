@@ -44,13 +44,16 @@ class TTSProvider(Protocol):
 class GeminiLLMProvider:
     """Real Gemini adapter using google-genai SDK."""
 
-    def __init__(self, api_key: str, model: str = "gemini-2.0-flash") -> None:
+    def __init__(self, api_key: str, model: str = "gemini-3.1-flash-lite") -> None:
         try:
-            import google.generativeai as genai
-            genai.configure(api_key=api_key)
-            self._model = genai.GenerativeModel(model)
+            # pyrefly: ignore [missing-import]
+            from google import genai
+            # pyrefly: ignore [missing-import]
+            from google.genai import types
+            self._client = genai.Client(api_key=api_key)
+            self._types = types
         except ImportError:
-            raise ImportError("Install google-generativeai: pip install google-genai")
+            raise ImportError("Install google-genai: pip install google-genai")
         self._model_name = model
 
     def complete(self, messages: list[dict[str, str]], system: str = "") -> str:
@@ -58,14 +61,30 @@ class GeminiLLMProvider:
         history = []
         for msg in messages[:-1]:
             role = "user" if msg["role"] == "user" else "model"
-            history.append({"role": role, "parts": [msg["content"]]})
+            history.append(
+                self._types.Content(role=role, parts=[self._types.Part.from_text(text=msg["content"])])
+            )
 
-        chat = self._model.start_chat(history=history)
-        last = messages[-1]["content"]
+        config = self._types.GenerateContentConfig()
         if system:
-            last = f"{system}\n\n{last}"
-        response = chat.send_message(last)
-        return response.text.strip()
+            config.system_instruction = system
+
+        chat = self._client.chats.create(model=self._model_name, config=config, history=history)
+        last = messages[-1]["content"]
+        
+        import time
+        for attempt in range(6):
+            try:
+                response = chat.send_message(last)
+                return response.text.strip()
+            except Exception as e:
+                if "429" in str(e) and attempt < 5:
+                    delay = (attempt + 1) * 6  # 6s, 12s, 18s...
+                    import logging
+                    logging.getLogger(__name__).warning(f"Rate limited (429). Retrying in {delay}s...")
+                    time.sleep(delay)
+                    continue
+                raise e
 
 
 # ---------------------------------------------------------------------------
@@ -77,6 +96,7 @@ class DeepgramSTTProvider:
 
     def __init__(self, api_key: str, model: str = "nova-2") -> None:
         try:
+            # pyrefly: ignore [missing-import]
             from deepgram import DeepgramClient, PrerecordedOptions
             self._client = DeepgramClient(api_key)
             self._options = PrerecordedOptions(model=model, smart_format=True)
@@ -84,6 +104,7 @@ class DeepgramSTTProvider:
             raise ImportError("Install deepgram-sdk: pip install deepgram-sdk")
 
     def transcribe(self, audio: bytes) -> str:
+        # pyrefly: ignore [missing-import]
         from deepgram import FileSource
         source: FileSource = {"buffer": audio}
         response = self._client.listen.prerecorded.v("1").transcribe_file(
@@ -101,6 +122,7 @@ class ElevenLabsTTSProvider:
 
     def __init__(self, api_key: str, voice_id: str = "Rachel") -> None:
         try:
+            # pyrefly: ignore [missing-import]
             from elevenlabs.client import ElevenLabs
             self._client = ElevenLabs(api_key=api_key)
             self._voice_id = voice_id

@@ -16,7 +16,7 @@ import json
 import logging
 import sys
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 logging.basicConfig(
@@ -92,10 +92,16 @@ def _run_scenarios(scenario_paths: list[Path], output_dir: Path) -> list[dict]:
     output_dir.mkdir(parents=True, exist_ok=True)
     results = []
 
+    from scoring.aggregator import aggregate
+
     for path in scenario_paths:
         scenario = loader.load(path)
         logger.info("Running scenario: %s", scenario.id)
         result = runner.run(scenario, run_id=run_id)
+        
+        # Run scoring engine
+        aggregate(result, scenario, llm, settings)
+        
         results.append(result)
         logger.info(
             "  %s — pass=%s  tags=%s",
@@ -107,7 +113,7 @@ def _run_scenarios(scenario_paths: list[Path], output_dir: Path) -> list[dict]:
     # Write run summary
     summary = {
         "run_id": run_id,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "total": len(results),
         "passed": sum(1 for r in results if r.passed),
         "failed": sum(1 for r in results if not r.passed),
@@ -117,6 +123,15 @@ def _run_scenarios(scenario_paths: list[Path], output_dir: Path) -> list[dict]:
                 "passed": r.passed,
                 "failure_tags": r.failure_tags,
                 "error": r.error,
+                "scores": getattr(r, "scores", {}),
+                "turns": [
+                    {
+                        "speaker": t.speaker,
+                        "text": t.text,
+                        "tool_calls": [{"name": tc.name, "args": tc.args} for tc in t.tool_calls]
+                    }
+                    for t in r.turns
+                ],
             }
             for r in results
         ],

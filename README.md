@@ -73,11 +73,11 @@ alembic upgrade head
 # 4. Validate scenarios
 python -m harness.validate scenarios/
 
-# 5. Dry-run (validates config + providers)
-python -m harness.run --dry-run
+# 5. Dry-run (use --mock-llm to avoid network calls)
+python -m harness.run --dry-run --mock-llm
 
-# 6. Run all scenarios
-python -m harness.run --all
+# 6. Run all scenarios (use --mock-llm for local/free testing)
+python -m harness.run --all --mock-llm
 
 # 7. Launch dashboard
 streamlit run dashboard/app.py

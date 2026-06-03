@@ -5,9 +5,11 @@ SQLAlchemy table definitions (source of truth for Alembic migrations).
 from __future__ import annotations
 
 from datetime import datetime
+# pyrefly: ignore [missing-import]
 from sqlalchemy import (
     Boolean, Column, DateTime, Float, Integer, JSON, String, Text
 )
+# pyrefly: ignore [missing-import]
 from sqlalchemy.orm import DeclarativeBase
 
 

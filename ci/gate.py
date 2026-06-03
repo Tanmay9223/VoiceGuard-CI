@@ -14,7 +14,9 @@ import logging
 import sys
 from pathlib import Path
 
+# pyrefly: ignore [missing-import]
 from rich.console import Console
+# pyrefly: ignore [missing-import]
 from rich.panel import Panel
 
 from ci.baseline import load_baseline, regression_delta

@@ -68,7 +68,10 @@ class CallerSimulator:
         goal_parts = []
         for outcome in scenario.expected_outcomes:
             if "tool_called" in outcome:
-                goal_parts.append(f"get the agent to call {outcome['tool_called']}")
+                goal_msg = f"get the agent to call {outcome['tool_called']}"
+                if "args" in outcome:
+                    goal_msg += f" using these exact details: {outcome['args']}"
+                goal_parts.append(goal_msg)
             if "disclosed" in outcome:
                 goal_parts.append(f"receive disclosure: {outcome['disclosed']}")
         self._goal = "; ".join(goal_parts) if goal_parts else "complete your insurance inquiry"

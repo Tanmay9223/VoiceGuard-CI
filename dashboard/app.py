@@ -7,10 +7,16 @@ Run with: streamlit run dashboard/app.py
 """
 from __future__ import annotations
 
-import json
+import sys
 from pathlib import Path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+import json
 from datetime import datetime
 
+# pyrefly: ignore [missing-import]
 import streamlit as st
 import pandas as pd
 
@@ -62,7 +68,12 @@ st.markdown("""
 
     .stDataFrame { border-radius: 8px; overflow: hidden; }
     h1, h2, h3 { color: #e0e0ff !important; }
-    .block-container { padding-top: 2rem; }
+    .block-container { padding-top: 1rem; }
+    
+    /* Hide the default Streamlit deploy button and header */
+    .stDeployButton { display: none !important; }
+    #MainMenu { visibility: hidden; }
+    header { visibility: hidden; }
 </style>
 """, unsafe_allow_html=True)
 
