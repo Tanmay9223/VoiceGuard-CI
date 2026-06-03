@@ -63,7 +63,7 @@ class HallucinationJudge:
         )
 
         prompt = f"""\
-You are evaluating an insurance agent transcript for hallucinations.
+Analyze this insurance agent transcript for hallucinations.
 
 TOOL RESULTS PROVIDED TO THE AGENT:
 {tool_results or "(none — agent made no tool calls)"}
@@ -112,7 +112,7 @@ class ConversationQualityJudge:
         )
 
         prompt = f"""\
-You are evaluating an insurance call center conversation.
+Score this insurance call center conversation.
 
 TRANSCRIPT:
 {transcript}
@@ -151,7 +151,7 @@ class InterruptionHandlingJudge:
         )
 
         prompt = f"""\
-You are evaluating whether an insurance agent handled interruptions gracefully.
+Did the agent handle caller interruptions gracefully?
 
 TRANSCRIPT:
 {transcript}

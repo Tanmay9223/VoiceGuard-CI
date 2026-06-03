@@ -151,12 +151,30 @@ _FIXTURE_RESPONSES: dict[str, str] = {
     "quote": "I'd be happy to help you get a quote. Could you please provide your vehicle's make, model, year, and ZIP code?",
     "renew": "I can help you with your renewal. Could you please provide your policy number?",
     "claim": "I'm sorry to hear you need to file a claim. I'll help you through the process. Could you describe what happened?",
+    
+    # New Real-World Scenarios
+    "cancel": "I can assist you with canceling your policy. Please note that a cancellation fee may apply depending on your term. What is your policy number?",
+    "update": "I'd be happy to help you update your policy details. What information would you like to change today?",
+    "add": "Adding a new driver or vehicle is no problem. I'll need their license number or the vehicle's VIN to get started.",
+    "billing": "I can help with your billing inquiry. Could you please verify your account number and ZIP code?",
+    "address": "I can update your address on file. Please be aware that changing your ZIP code might affect your premium. What is your new address?",
+    "payment": "I can assist you with making a payment or updating your payment method. Are we using the card ending in 1234?",
+    "discount": "We offer various discounts, such as safe driver and multi-vehicle. Let me review your profile to see what you qualify for.",
+    "coverage": "I can explain your current coverages. It looks like you have comprehensive and collision. Are you looking to adjust your limits?",
+    "accident": "I'm so sorry to hear you were in an accident. Are you in a safe location, and does anyone need medical attention?",
     # Hallucination judge
-    "you": json.dumps({"hallucinations": [], "confidence": 0.95}),
+    "analyze": json.dumps({"hallucinations": [], "confidence": 0.95}),
     # Quality judge
     "score": json.dumps({"score": 4.2, "issues": [], "reasoning": "Agent was clear and empathetic."}),
     # Interruption judge
     "did": json.dumps({"handled_well": True, "examples": []}),
+    # Scenario Generator
+    "generate": json.dumps({
+        "workflow": "quote",
+        "caller_persona": "A standard caller testing the system.",
+        "opening_line": "Hello.",
+        "expected_outcomes": []
+    }),
     # Default fallback
     "_default": (
         "I understand. Let me assist you with that. "
@@ -177,6 +195,11 @@ class MockLLMProvider:
         if not messages:
             return _FIXTURE_RESPONSES["_default"]
         last_content = messages[-1].get("content", "").strip()
+        
+        # Prevent infinite loops if two mock LLMs are talking to each other
+        if _FIXTURE_RESPONSES["_default"] in last_content:
+            return "thank you, goodbye"
+            
         first_word = last_content.split()[0].lower() if last_content else "_default"
         response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
         logger.debug("[MockLLM] Returning fixture for key=%r", first_word)

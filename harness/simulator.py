@@ -63,6 +63,11 @@ class CallerSimulator:
         self._inject_interruptions = inject_interruptions
         self._interrupt_probability = interrupt_probability
         self._history: list[dict[str, str]] = []
+        self._scripted_turns = [
+            turn.text for turn in scenario.turns 
+            if turn.speaker == "caller" and turn.text
+        ]
+        self._turn_index = 0
 
         # Build a goal string from expected_outcomes for the simulator's context
         goal_parts = []
@@ -83,19 +88,28 @@ class CallerSimulator:
 
     def opening_line(self) -> str:
         """Return the first caller utterance (seeded from scenario or generated)."""
-        # Use the first caller turn from the scenario YAML if provided
-        for turn in self._scenario.turns:
-            if turn.speaker == "caller" and turn.text:
-                return turn.text
+        if self._turn_index < len(self._scripted_turns):
+            text = self._scripted_turns[self._turn_index]
+            self._turn_index += 1
+            self._history.append({"role": "assistant", "content": text})
+            return text
+
         # Otherwise generate one
         prompt = [{"role": "user", "content": "Start the call. Say your opening line."}]
-        return self._llm.complete(prompt, system=self._system)
+        response = self._llm.complete(prompt, system=self._system)
+        self._history.append({"role": "assistant", "content": response})
+        return response
 
     def respond(self, agent_utterance: str) -> str:
         """Generate the caller's next utterance in response to the agent."""
         self._history.append({"role": "user", "content": f"[AGENT]: {agent_utterance}"})
 
-        response = self._llm.complete(self._history, system=self._system)
+        if self._turn_index < len(self._scripted_turns):
+            response = self._scripted_turns[self._turn_index]
+            self._turn_index += 1
+        else:
+            response = self._llm.complete(self._history, system=self._system)
+
         self._history.append({"role": "assistant", "content": response})
 
         # Optionally inject an interruption prefix
@@ -112,3 +126,4 @@ class CallerSimulator:
 
     def reset(self) -> None:
         self._history.clear()
+        self._turn_index = 0

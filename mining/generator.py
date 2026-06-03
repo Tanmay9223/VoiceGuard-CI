@@ -26,7 +26,7 @@ def generate_scenario(failure: "FailureEvent", llm: "LLMProvider") -> Path | Non
     transcript = failure.call_data.full_transcript()
     
     prompt = f"""\
-You are an expert QA automation engineer for an insurance voice agent.
+Generate a regression scenario for an insurance voice agent.
 A production call failed with these tags: {failure.failure_tags}
 
 TRANSCRIPT:

@@ -114,6 +114,7 @@ def _run_scenarios(scenario_paths: list[Path], output_dir: Path) -> list[dict]:
     summary = {
         "run_id": run_id,
         "timestamp": datetime.now(timezone.utc).isoformat(),
+        "mock_llm": settings.mock_llm,
         "total": len(results),
         "passed": sum(1 for r in results if r.passed),
         "failed": sum(1 for r in results if not r.passed),
