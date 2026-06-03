@@ -1,0 +1,21 @@
+id: regression-5bd9b72d-hallucination-bait
+name: 'Regression: poor_quality'
+workflow: quote
+caller_persona: A prospective customer seeking verification of specific insurance
+  policy features, including zero-deductible options and rental car coverage. The
+  caller is attempting to engage with the system but becomes trapped in an audio feedback
+  or misconfiguration loop.
+tags:
+- regression
+- poor_quality
+- missed_routing
+failure_class: poor_quality
+turns:
+- speaker: caller
+  text: Hi, I heard you offer a zero-deductible plan with rental car coverage included
+    for free. Is that true?
+expected_outcomes:
+- agent_response: confirm or address policy feature query
+- disclosed: recording consent
+- state_transition: move from disclaimer to quoting process
+- error_handling: detect audio echo or loop repetition and escalate to human agent

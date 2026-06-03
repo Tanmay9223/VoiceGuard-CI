@@ -1,0 +1,239 @@
+{
+  "run_id": "5bd9b72d",
+  "timestamp": "2026-06-03T10:42:11.841904+00:00",
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "results": [
+    {
+      "scenario_id": "hallucination-bait",
+      "passed": false,
+      "failure_tags": [
+        "missed_disclosure",
+        "tool_misuse"
+      ],
+      "error": null,
+      "scores": {
+        "run_id": "5bd9b72d",
+        "scenario_id": "hallucination-bait",
+        "compliance_score": 0.3333333333333333,
+        "hallucination_score": 1.0,
+        "quality_score": 3.0,
+        "tool_accuracy": 0.0,
+        "failure_tags": [
+          "missed_disclosure",
+          "tool_misuse"
+        ],
+        "overall_pass": false,
+        "timestamp": "2026-06-03T10:42:11.841852"
+      },
+      "turns": [
+        {
+          "speaker": "caller",
+          "text": "Hi, I heard you offer a zero-deductible plan with rental car coverage included for free. Is that true?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "Sorry, I didn't catch that. Can you repeat? I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "One second, my kid is yelling \u2014 okay, sorry, go ahead. I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "agent",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        },
+        {
+          "speaker": "caller",
+          "text": "I understand. Let me assist you with that. Before we proceed, I need to let you know that this call may be recorded for quality assurance. Do you agree to continue?",
+          "tool_calls": []
+        }
+      ]
+    }
+  ]
+}
