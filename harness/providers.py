@@ -196,11 +196,11 @@ class MockLLMProvider:
             return _FIXTURE_RESPONSES["_default"]
         last_content = messages[-1].get("content", "").strip()
         
-        # Prevent infinite loops if two mock LLMs are talking to each other
-        if _FIXTURE_RESPONSES["_default"] in last_content:
-            return "thank you, goodbye"
-            
         first_word = last_content.split()[0].lower() if last_content else "_default"
+
+        # Prevent infinite loops if two mock LLMs are talking to each other
+        if first_word not in ["analyze", "score", "did", "generate"] and _FIXTURE_RESPONSES["_default"] in last_content:
+            return "thank you, goodbye"
         response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
         logger.debug("[MockLLM] Returning fixture for key=%r", first_word)
         return response
