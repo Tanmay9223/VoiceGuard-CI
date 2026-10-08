@@ -208,13 +208,13 @@ class MockLLMProvider:
              response = _FIXTURE_RESPONSES["generate"]
              first_word = "generate"
         elif "evaluator" in system_lower:
-            if "hallucination" in last_content_lower:
+            if "analyze this insurance agent transcript for hallucinations" in last_content_lower:
                 response = _FIXTURE_RESPONSES["analyze"]
                 first_word = "analyze"
-            elif "score" in last_content_lower:
+            elif "score this insurance call center conversation" in last_content_lower:
                 response = _FIXTURE_RESPONSES["score"]
                 first_word = "score"
-            elif "interruption" in last_content_lower:
+            elif "did the agent handle caller interruptions gracefully" in last_content_lower:
                 response = _FIXTURE_RESPONSES["did"]
                 first_word = "did"
             else:
