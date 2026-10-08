@@ -200,8 +200,25 @@ class MockLLMProvider:
         if _FIXTURE_RESPONSES["_default"] in last_content:
             return "thank you, goodbye"
             
-        first_word = last_content.split()[0].lower() if last_content else "_default"
-        response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
+        last_content_lower = last_content.lower()
+        system_lower = system.lower() if system else ""
+        if "evaluator" in system_lower:
+            if "hallucination" in last_content_lower:
+                response = _FIXTURE_RESPONSES["analyze"]
+                first_word = "analyze"
+            elif "score" in last_content_lower:
+                response = _FIXTURE_RESPONSES["score"]
+                first_word = "score"
+            elif "interruption" in last_content_lower:
+                response = _FIXTURE_RESPONSES["did"]
+                first_word = "did"
+            else:
+                first_word = "_default_eval"
+                response = "{}"
+        else:
+            first_word = last_content.split()[0].lower() if last_content else "_default"
+            response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
+
         logger.debug("[MockLLM] Returning fixture for key=%r", first_word)
         return response
 
