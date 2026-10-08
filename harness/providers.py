@@ -202,7 +202,12 @@ class MockLLMProvider:
             
         last_content_lower = last_content.lower()
         system_lower = system.lower() if system else ""
-        if "evaluator" in system_lower:
+
+        # Scenario generator fallback
+        if "generate" in last_content_lower and "workflow" in last_content_lower:
+             response = _FIXTURE_RESPONSES["generate"]
+             first_word = "generate"
+        elif "evaluator" in system_lower:
             if "hallucination" in last_content_lower:
                 response = _FIXTURE_RESPONSES["analyze"]
                 first_word = "analyze"
