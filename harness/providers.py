@@ -197,7 +197,7 @@ class MockLLMProvider:
         last_content = messages[-1].get("content", "").strip()
         
         # Prevent infinite loops if two mock LLMs are talking to each other
-        if _FIXTURE_RESPONSES["_default"] in last_content:
+        if _FIXTURE_RESPONSES["_default"] in last_content and not last_content.startswith("Score this insurance") and not last_content.startswith("Analyze this insurance") and not last_content.startswith("Did the agent handle caller interruptions"):
             return "thank you, goodbye"
             
         first_word = last_content.split()[0].lower() if last_content else "_default"

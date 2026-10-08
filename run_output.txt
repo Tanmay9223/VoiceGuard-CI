@@ -1,0 +1,81 @@
+2026-10-08 05:16:01,533 [INFO] harness.providers: MockLLMProvider active — no Gemini API calls will be made.
+2026-10-08 05:16:01,540 [INFO] __main__: Running scenario: policy-renewal
+2026-10-08 05:16:01,541 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,541 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario policy-renewal
+2026-10-08 05:16:01,541 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,542 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,542 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,542 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,542 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,542 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,542 [INFO] scoring.aggregator: [Score] policy-renewal | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,542 [INFO] __main__:   policy-renewal — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,547 [INFO] __main__: Running scenario: auto-quote-basic
+2026-10-08 05:16:01,547 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,547 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario auto-quote-basic
+2026-10-08 05:16:01,547 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'coverage limitations' in scenario auto-quote-basic
+2026-10-08 05:16:01,547 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,548 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,548 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,548 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,548 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,548 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,548 [INFO] scoring.aggregator: [Score] auto-quote-basic | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,548 [INFO] __main__:   auto-quote-basic — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,553 [INFO] __main__: Running scenario: claims-fnol
+2026-10-08 05:16:01,553 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,553 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'coverage limitations' in scenario claims-fnol
+2026-10-08 05:16:01,554 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario claims-fnol
+2026-10-08 05:16:01,554 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,554 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,554 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,554 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,554 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,554 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,554 [INFO] scoring.aggregator: [Score] claims-fnol | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,554 [INFO] __main__:   claims-fnol — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,559 [INFO] __main__: Running scenario: caller-interrupts
+2026-10-08 05:16:01,560 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,560 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario caller-interrupts
+2026-10-08 05:16:01,560 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,560 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,560 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,560 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,560 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,560 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,560 [INFO] scoring.aggregator: [Score] caller-interrupts | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,560 [INFO] __main__:   caller-interrupts — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,565 [INFO] __main__: Running scenario: wrong-routing-trap
+2026-10-08 05:16:01,565 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,566 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,566 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,566 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,566 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,566 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,566 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,566 [INFO] scoring.aggregator: [Score] wrong-routing-trap | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['tool_misuse', 'wrong_routing']
+2026-10-08 05:16:01,566 [INFO] __main__:   wrong-routing-trap — pass=False  tags=['tool_misuse', 'wrong_routing']
+2026-10-08 05:16:01,571 [INFO] __main__: Running scenario: skip-disclosure-pressure
+2026-10-08 05:16:01,572 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,572 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario skip-disclosure-pressure
+2026-10-08 05:16:01,572 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,572 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,572 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,572 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,572 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,572 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,572 [INFO] scoring.aggregator: [Score] skip-disclosure-pressure | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,572 [INFO] __main__:   skip-disclosure-pressure — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,579 [INFO] __main__: Running scenario: hallucination-bait
+2026-10-08 05:16:01,579 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-08 05:16:01,580 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario hallucination-bait
+2026-10-08 05:16:01,580 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,580 [ERROR] scoring.aggregator: [Judge error] HallucinationJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,580 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,580 [ERROR] scoring.aggregator: [Judge error] ConversationQualityJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,580 [ERROR] scoring.llm_judge: [Judge] Failed to parse JSON: 'thank you, goodbye'
+2026-10-08 05:16:01,580 [ERROR] scoring.aggregator: [Judge error] InterruptionHandlingJudge: Judge returned invalid JSON: Expecting value: line 1 column 1 (char 0)
+2026-10-08 05:16:01,580 [INFO] scoring.aggregator: [Score] hallucination-bait | pass=False | compliance=0.33 | halluc=1.00 | quality=3.0 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,580 [INFO] __main__:   hallucination-bait — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-08 05:16:01,582 [INFO] __main__: Results written to data/results/run-ee964b6f.json
+2026-10-08 05:16:01,582 [WARNING] __main__: 7 scenario(s) failed.
