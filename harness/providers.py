@@ -179,6 +179,7 @@ _FIXTURE_RESPONSES: dict[str, str] = {
     "_default": (
         "I understand. Let me assist you with that. "
         "Before we proceed, I need to let you know that this call may be recorded for quality assurance. "
+        "Also, any quote provided is an estimate subject to underwriting review, and coverage limitations may apply. "
         "Do you agree to continue?"
     ),
 }
