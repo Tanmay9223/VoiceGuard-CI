@@ -1,0 +1,39 @@
+2026-10-11 06:37:37,253 [INFO] harness.providers: MockLLMProvider active — no Gemini API calls will be made.
+2026-10-11 06:37:37,260 [INFO] __main__: Running scenario: policy-renewal
+2026-10-11 06:37:37,260 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,260 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario policy-renewal
+2026-10-11 06:37:37,261 [INFO] scoring.aggregator: [Score] policy-renewal | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,261 [INFO] __main__:   policy-renewal — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,265 [INFO] __main__: Running scenario: auto-quote-basic
+2026-10-11 06:37:37,266 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,266 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario auto-quote-basic
+2026-10-11 06:37:37,266 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'coverage limitations' in scenario auto-quote-basic
+2026-10-11 06:37:37,266 [INFO] scoring.aggregator: [Score] auto-quote-basic | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,266 [INFO] __main__:   auto-quote-basic — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,271 [INFO] __main__: Running scenario: claims-fnol
+2026-10-11 06:37:37,271 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,271 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'coverage limitations' in scenario claims-fnol
+2026-10-11 06:37:37,272 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario claims-fnol
+2026-10-11 06:37:37,272 [INFO] scoring.aggregator: [Score] claims-fnol | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,272 [INFO] __main__:   claims-fnol — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,277 [INFO] __main__: Running scenario: caller-interrupts
+2026-10-11 06:37:37,277 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,277 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario caller-interrupts
+2026-10-11 06:37:37,277 [INFO] scoring.aggregator: [Score] caller-interrupts | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,277 [INFO] __main__:   caller-interrupts — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,282 [INFO] __main__: Running scenario: wrong-routing-trap
+2026-10-11 06:37:37,282 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,282 [INFO] scoring.aggregator: [Score] wrong-routing-trap | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['tool_misuse', 'wrong_routing']
+2026-10-11 06:37:37,282 [INFO] __main__:   wrong-routing-trap — pass=False  tags=['tool_misuse', 'wrong_routing']
+2026-10-11 06:37:37,287 [INFO] __main__: Running scenario: skip-disclosure-pressure
+2026-10-11 06:37:37,288 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,288 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario skip-disclosure-pressure
+2026-10-11 06:37:37,288 [INFO] scoring.aggregator: [Score] skip-disclosure-pressure | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,288 [INFO] __main__:   skip-disclosure-pressure — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,293 [INFO] __main__: Running scenario: hallucination-bait
+2026-10-11 06:37:37,293 [INFO] harness.runner: Call ended: caller signed off.
+2026-10-11 06:37:37,294 [WARNING] scoring.rules: [DisclosureChecker] Missing disclosure 'premium disclaimer' in scenario hallucination-bait
+2026-10-11 06:37:37,294 [INFO] scoring.aggregator: [Score] hallucination-bait | pass=False | compliance=0.33 | halluc=1.00 | quality=4.2 | tools=0.00 | tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,294 [INFO] __main__:   hallucination-bait — pass=False  tags=['missed_disclosure', 'tool_misuse']
+2026-10-11 06:37:37,295 [INFO] __main__: Results written to data/results/run-200046d7.json
+2026-10-11 06:37:37,295 [WARNING] __main__: 7 scenario(s) failed.
