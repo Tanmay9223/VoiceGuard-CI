@@ -179,6 +179,7 @@ _FIXTURE_RESPONSES: dict[str, str] = {
     "_default": (
         "I understand. Let me assist you with that. "
         "Before we proceed, I need to let you know that this call may be recorded for quality assurance. "
+        "Also, any quote provided is an estimate subject to underwriting review, and coverage limitations may apply. "
         "Do you agree to continue?"
     ),
 }
@@ -197,33 +198,27 @@ class MockLLMProvider:
         last_content = messages[-1].get("content", "").strip()
         
         # Prevent infinite loops if two mock LLMs are talking to each other
-        if _FIXTURE_RESPONSES["_default"] in last_content:
+        if _FIXTURE_RESPONSES["_default"] in last_content and not last_content.startswith("Score this insurance") and not last_content.startswith("Analyze this insurance") and not last_content.startswith("Did the agent handle caller interruptions"):
             return "thank you, goodbye"
             
         last_content_lower = last_content.lower()
-        system_lower = system.lower() if system else ""
 
-        # Scenario generator fallback
-        if "generate" in last_content_lower and "workflow" in last_content_lower:
-             response = _FIXTURE_RESPONSES["generate"]
-             first_word = "generate"
-        elif "evaluator" in system_lower:
-            if "analyze this insurance agent transcript for hallucinations" in last_content_lower:
-                response = _FIXTURE_RESPONSES["analyze"]
-                first_word = "analyze"
-            elif "score this insurance call center conversation" in last_content_lower:
-                response = _FIXTURE_RESPONSES["score"]
-                first_word = "score"
-            elif "did the agent handle caller interruptions gracefully" in last_content_lower:
-                response = _FIXTURE_RESPONSES["did"]
-                first_word = "did"
-            else:
-                first_word = "_default_eval"
-                response = "{}"
+        # Match expected prefixes for judge evaluations
+        if last_content.startswith("Score this insurance"):
+            first_word = "score"
+        elif last_content.startswith("Analyze this insurance"):
+            first_word = "analyze"
+        elif last_content.startswith("Did the agent handle caller interruptions"):
+            first_word = "did"
+        elif "generate" in last_content_lower and "workflow" in last_content_lower:
+            # Scenario generator fallback
+            response = _FIXTURE_RESPONSES["generate"]
+            first_word = "generate"
         else:
             first_word = last_content.split()[0].lower() if last_content else "_default"
-            response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
 
+        if first_word != "generate":
+            response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
         logger.debug("[MockLLM] Returning fixture for key=%r", first_word)
         return response
 
