@@ -64,7 +64,8 @@ class DisclosureChecker:
 
         missing: list[str] = []
         for disclosure_key in required:
-            variants = _REQUIRED_DISCLOSURES.get(disclosure_key, [disclosure_key.lower()])
+            if (variants := _REQUIRED_DISCLOSURES.get(disclosure_key)) is None:
+                variants = [disclosure_key.lower()]
             found = any(v in agent_text for v in variants)
             if not found:
                 missing.append(disclosure_key)
