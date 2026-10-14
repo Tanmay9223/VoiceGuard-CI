@@ -15,11 +15,14 @@ if str(project_root) not in sys.path:
 
 import os
 import json
+import logging
 from datetime import datetime
 
 # pyrefly: ignore [missing-import]
 import streamlit as st
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Page config
@@ -96,8 +99,8 @@ def load_runs(n: int = 10) -> list[dict]:
     for path in paths[:n]:
         try:
             runs.append(json.loads(path.read_text()))
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error(f"Failed to load run from {path}: {e}")
     return runs
 
 
@@ -346,8 +349,8 @@ else:
                 "Workflow": data.get("workflow", "quote"),
                 "Action": "Review & Merge"
             })
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error(f"Failed to load pending scenario {f}: {e}")
             
     if rows:
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
