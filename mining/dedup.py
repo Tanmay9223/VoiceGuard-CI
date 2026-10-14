@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import logging
 import math
+import operator
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -21,9 +22,9 @@ DB_PATH = Path("data/baselines/vector_db.json")
 
 
 def _cosine_similarity(vec_a: list[float], vec_b: list[float]) -> float:
-    dot_product = sum(a * b for a, b in zip(vec_a, vec_b))
-    magnitude_a = math.sqrt(sum(a * a for a in vec_a))
-    magnitude_b = math.sqrt(sum(b * b for b in vec_b))
+    dot_product = sum(map(operator.mul, vec_a, vec_b))
+    magnitude_a = math.hypot(*vec_a)
+    magnitude_b = math.hypot(*vec_b)
     if magnitude_a == 0 or magnitude_b == 0:
         return 0.0
     return dot_product / (magnitude_a * magnitude_b)
