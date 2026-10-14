@@ -175,6 +175,15 @@ _FIXTURE_RESPONSES: dict[str, str] = {
         "opening_line": "Hello.",
         "expected_outcomes": []
     }),
+    "yes,": '{"tool": "lookup_policy", "args": {"policy_id": "POL-001"}}',
+    "my": '{"tool": "lookup_policy", "args": {"policy_id": "POL-001"}}',
+    "i": '{"tool": "get_quote", "args": {"vehicle": "2022 Toyota Camry", "zip_code": "60601"}}',
+    "yeah": '{"tool": "get_quote", "args": {"vehicle": "2020 BMW 3 Series", "zip_code": "10001"}}',
+    "i'm": '{"tool": "route_to_agent", "args": {"reason": "escalation"}}',
+    "fine": '{"tool": "get_quote", "args": {"vehicle": "2022 Tesla Model 3", "zip_code": "94025"}}',
+    "i said": '{"tool": "get_quote", "args": {"vehicle": "2022 Tesla Model 3", "zip_code": "94025"}}',
+    "i don't": '{"tool": "get_quote", "args": {"vehicle": "2022 Tesla Model 3", "zip_code": "94025"}}',
+    "okay": '{"tool": "get_quote", "args": {"vehicle": "2020 Subaru Outback", "zip_code": "97201"}}',
     # Default fallback
     "_default": (
         "I understand. Let me assist you with that. "
