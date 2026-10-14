@@ -104,6 +104,10 @@ class ToolCallChecker:
         actual_calls = result.all_tool_calls()
         actual_names = {tc.name for tc in actual_calls}
 
+        calls_by_name = {}
+        for tc in actual_calls:
+            calls_by_name.setdefault(tc.name, []).append(tc)
+
         issues: list[str] = []
 
         for expected in expected_calls:
@@ -111,7 +115,7 @@ class ToolCallChecker:
             expected_args: dict[str, Any] = expected.get("args", {})
 
             # Part 1: Was the tool called at all?
-            matching = [tc for tc in actual_calls if tc.name == tool_name]
+            matching = calls_by_name.get(tool_name, [])
             if not matching:
                 issues.append(f"Expected tool {tool_name!r} was never called.")
                 continue
