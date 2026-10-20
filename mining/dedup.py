@@ -20,9 +20,10 @@ logger = logging.getLogger(__name__)
 DB_PATH = Path("data/baselines/vector_db.json")
 
 
-def _cosine_similarity(vec_a: list[float], vec_b: list[float]) -> float:
+def _cosine_similarity(vec_a: list[float], vec_b: list[float], magnitude_a: float | None = None) -> float:
     dot_product = sum(a * b for a, b in zip(vec_a, vec_b))
-    magnitude_a = math.sqrt(sum(a * a for a in vec_a))
+    if magnitude_a is None:
+        magnitude_a = math.sqrt(sum(a * a for a in vec_a))
     magnitude_b = math.sqrt(sum(b * b for b in vec_b))
     if magnitude_a == 0 or magnitude_b == 0:
         return 0.0
@@ -68,8 +69,9 @@ class VectorDB:
         max_sim = 0.0
         best_match = None
 
+        magnitude_vector = math.sqrt(sum(a * a for a in vector))
         for existing_id, existing_vec in self._cache.items():
-            sim = _cosine_similarity(vector, existing_vec)
+            sim = _cosine_similarity(vector, existing_vec, magnitude_a=magnitude_vector)
             if sim > max_sim:
                 max_sim = sim
                 best_match = existing_id
