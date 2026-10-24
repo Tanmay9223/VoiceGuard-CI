@@ -210,6 +210,8 @@ class MockLLMProvider:
         if _FIXTURE_RESPONSES["_default"] in last_content and not last_content.startswith("Score this insurance") and not last_content.startswith("Analyze this insurance") and not last_content.startswith("Did the agent handle caller interruptions"):
             return "thank you, goodbye"
             
+        last_content_lower = last_content.lower()
+
         # Match expected prefixes for judge evaluations
         if last_content.startswith("Score this insurance"):
             first_word = "score"
@@ -217,8 +219,15 @@ class MockLLMProvider:
             first_word = "analyze"
         elif last_content.startswith("Did the agent handle caller interruptions"):
             first_word = "did"
+        elif "generate" in last_content_lower and "workflow" in last_content_lower:
+            # Scenario generator fallback
+            first_word = "generate"
         else:
             first_word = last_content.split()[0].lower() if last_content else "_default"
+
+        # Safe fallback if first_word ends up being generate but wasn't caught above
+        if first_word == "generate" and ("workflow" not in last_content_lower):
+            first_word = "_default"
 
         response = _FIXTURE_RESPONSES.get(first_word, _FIXTURE_RESPONSES["_default"])
         logger.debug("[MockLLM] Returning fixture for key=%r", first_word)
