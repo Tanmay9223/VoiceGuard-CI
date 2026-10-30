@@ -46,7 +46,14 @@ with tempfile.TemporaryDirectory() as d:
 
     with patch("pathlib.Path.exists", return_value=True):
         with patch("pathlib.Path.glob", return_value=[dummy_file]):
-            from dashboard.app import load_runs
+            from dashboard.app import load_runs, _decision_badge
+
+def test_decision_badge():
+    assert _decision_badge("ship") == "✅ SHIP"
+    assert _decision_badge("ship_with_warnings") == "⚠️ WARN"
+    assert _decision_badge("block_merge") == "🚫 BLOCK"
+    assert _decision_badge("other") == "OTHER"
+    assert _decision_badge("unknown") == "UNKNOWN"
 
 def test_load_runs_dir_not_exists(tmp_path):
     with patch("dashboard.app.RESULTS_DIR", tmp_path / "nonexistent"):
